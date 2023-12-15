@@ -5,6 +5,7 @@ using QuantConnect.Indicators;
 using QuantConnect.Interfaces;
 using QuantConnect.Orders;
 using QuantConnect.Parameters;
+using static Python.Runtime.TypeSpec;
 
 namespace QuantConnect.Algorithm.CSharp
 {
@@ -15,6 +16,10 @@ namespace QuantConnect.Algorithm.CSharp
         private Dictionary<string, MovingAverageConvergenceDivergence> _macdIndicators;
         private Dictionary<string, RelativeStrengthIndex> _rsiIndicators;
         private readonly string[] _symbols = { "AAPL", "BAC", "AIG", "IBM" };
+
+        private string _ChartName = "Trade Plot";
+        private string _PriceSeriesName = "Price";
+        private string _PortfoliovalueSeriesName = "PortFolioValue";
 
         // Paramètre de tolérance
         [Parameter(name: "toleranceValue")]
@@ -77,7 +82,10 @@ namespace QuantConnect.Algorithm.CSharp
                 CheckStopLoss(symbol, data[symbol].Close, 0.75m);
 
                 // Tracer le cours de clôture du titre
-                Plot(symbol + "_Close", data[symbol].Close);
+                // Plot(symbol + "_Close", Math.Log((double)data[symbol].Close));
+                Plot("Trade Plot Portfolio", _PortfoliovalueSeriesName, Portfolio.TotalPortfolioValue);
+          
+                 
             }
 
             // Mettre à jour la variable de date précédente

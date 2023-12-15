@@ -7,6 +7,9 @@ namespace QuantConnect.Algorithm.CSharp
     public class WarriorBench : QCAlgorithm, IRegressionAlgorithmDefinition
     {
         private Symbol _spy = QuantConnect.Symbol.Create("SPY", SecurityType.Equity, Market.USA);
+        private string _ChartName = "Trade Plot";
+        private string _PriceSeriesName = "Price";
+        private string _PortfoliovalueSeriesName = "PortFolioValue";
 
         public override void Initialize()
         {
@@ -33,6 +36,9 @@ namespace QuantConnect.Algorithm.CSharp
                 Liquidate();
                 Debug("Liquidated all holdings at the end of the period");
             }
+
+            Plot(_ChartName, _PortfoliovalueSeriesName, Portfolio.TotalPortfolioValue);
+
         }
 
         public bool CanRunLocally { get; } = true;
